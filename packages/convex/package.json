@@ -1,5 +1,5 @@
 {
-  "name": "@ukranian_app/convex",
+  "name": "@ukrainian_app/convex",
   "type": "module",
   "scripts": {
     "dev": "npx convex dev",

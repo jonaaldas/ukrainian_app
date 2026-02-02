@@ -10,8 +10,6 @@
     "clean": "rm -rf .expo node_modules"
   },
   "dependencies": {
-    "@ukrainian_app/convex": "*",
-    "@ukrainian_app/styles": "*",
     "@react-navigation/native": "^7.0.0",
     "@rn-primitives/accordion": "^1.2.0",
     "@rn-primitives/alert-dialog": "^1.2.0",
@@ -37,6 +35,9 @@
     "@rn-primitives/toggle": "^1.2.0",
     "@rn-primitives/toggle-group": "^1.2.0",
     "@rn-primitives/tooltip": "^1.2.0",
+    "@ukrainian_app/convex": "*",
+    "@ukrainian_app/styles": "*",
+    "babel-preset-expo": "~54.0.10",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "expo": "~54.0.29",
