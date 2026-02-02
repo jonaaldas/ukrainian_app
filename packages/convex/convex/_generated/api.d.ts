@@ -9,6 +9,7 @@
  */
 
 import type * as flashcards from "../flashcards.js";
+import type * as flashcardsCsv from "../flashcardsCsv.js";
 
 import type {
   ApiFromModules,
@@ -18,6 +19,7 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   flashcards: typeof flashcards;
+  flashcardsCsv: typeof flashcardsCsv;
 }>;
 
 /**

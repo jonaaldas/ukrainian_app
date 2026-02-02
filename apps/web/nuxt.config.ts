@@ -1,5 +1,7 @@
 import tailwindcss from '@tailwindcss/vite';
 
+console.log(process.env.NUXT_CONVEX_URL);
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -26,8 +28,11 @@ export default defineNuxtConfig({
     componentDir: '@/components/ui',
   },
 
-  modules: ['shadcn-nuxt', '@nuxtjs/color-mode'],
+  modules: ['shadcn-nuxt', '@nuxtjs/color-mode', 'convex-nuxt'],
   colorMode: {
     classSuffix: ''
-  }
+  },
+  convex: {
+    url: process.env.NUXT_CONVEX_URL,
+  },
 });
