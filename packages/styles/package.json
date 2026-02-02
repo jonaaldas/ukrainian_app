@@ -1,0 +1,9 @@
+{
+  "name": "@ukrainian_app/styles",
+  "version": "0.0.1",
+  "main": "theme.css",
+  "exports": {
+    ".": "./theme.css",
+    "./theme": "./theme.css"
+  }
+}

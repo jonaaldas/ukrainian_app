@@ -1,0 +1,5 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import '@ukrainian_app/styles/theme';
+
+@custom-variant dark (&:is(.dark *));

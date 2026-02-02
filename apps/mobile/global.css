@@ -1,0 +1,8 @@
+@import 'tailwindcss';
+@import 'uniwind';
+@import 'tw-animate-css';
+@import '@ukrainian_app/styles/theme';
+
+@theme {
+  --spacing-hairline: hairlineWidth();
+}
