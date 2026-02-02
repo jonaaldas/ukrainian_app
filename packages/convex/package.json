@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "convex": "^1.31.7",
-    "convex-svelte": "^0.0.12"
+    "convex-svelte": "^0.0.12",
+    "papaparse": "^5.5.1"
   }
 }

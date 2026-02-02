@@ -8,13 +8,17 @@
  * @module
  */
 
+import type * as flashcards from "../flashcards.js";
+
 import type {
   ApiFromModules,
   FilterApi,
   FunctionReference,
 } from "convex/server";
 
-declare const fullApi: ApiFromModules<{}>;
+declare const fullApi: ApiFromModules<{
+  flashcards: typeof flashcards;
+}>;
 
 /**
  * A utility for referencing Convex functions in your app's public API.

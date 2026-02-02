@@ -26,5 +26,8 @@ export default defineNuxtConfig({
     componentDir: '@/components/ui',
   },
 
-  modules: ['shadcn-nuxt'],
+  modules: ['shadcn-nuxt', '@nuxtjs/color-mode'],
+  colorMode: {
+    classSuffix: ''
+  }
 });
