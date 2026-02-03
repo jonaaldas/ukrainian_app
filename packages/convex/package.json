@@ -6,6 +6,7 @@
     "build": "tsc"
   },
   "devDependencies": {
+    "@types/papaparse": "^5.5.2",
     "typescript": "latest"
   },
   "dependencies": {

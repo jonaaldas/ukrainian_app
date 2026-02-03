@@ -3,12 +3,18 @@ import { v } from "convex/values";
 import Papa from "papaparse";
 import { api } from "./_generated/api";
 
+type CsvImportResult = {
+  inserted: number;
+  skipped: number;
+  errors: string[];
+};
+
 export const importCsv = action({
   args: {
     csvText: v.string(),
     defaultCategory: v.optional(v.string()),
   },
-  handler: async (ctx, args) => {
+  handler: async (ctx, args): Promise<CsvImportResult> => {
     const parsed = Papa.parse<Record<string, string>>(args.csvText, {
       header: true,
       skipEmptyLines: true,
@@ -42,7 +48,7 @@ export const importCsv = action({
       return { inserted: 0, skipped: parsed.data.length, errors };
     }
 
-    const result = await ctx.runMutation(api.flashcards.createManyFlashcards, {
+    const result: { count: number } = await ctx.runMutation(api.flashcards.createManyFlashcards, {
       items,
     });
 

@@ -10,6 +10,29 @@
       <p class="mt-2 text-sm text-muted-foreground">
         Upload a CSV to bulk import flashcards into Convex.
       </p>
+
+      <div class="mt-8">
+        <h2 class="text-lg font-semibold">All flashcards</h2>
+        <p v-if="isPending" class="mt-2 text-sm text-muted-foreground">Loading...</p>
+        <p v-else-if="listError" class="mt-2 text-sm text-destructive">
+          {{ listError.message ?? 'Failed to load flashcards.' }}
+        </p>
+        <ul v-else class="mt-4 space-y-2">
+          <li
+            v-for="card in flashcards"
+            :key="card._id"
+            class="rounded-md border border-border bg-card px-4 py-3 text-sm">
+            <div class="font-medium text-foreground">{{ card.ukrainian }}</div>
+            <div class="text-muted-foreground">{{ card.english }}</div>
+            <div v-if="card.category" class="mt-1 text-xs text-muted-foreground">
+              {{ card.category }}
+            </div>
+          </li>
+        </ul>
+        <p v-if="!isPending && !listError && flashcards.length === 0" class="mt-4 text-sm text-muted-foreground">
+          No flashcards yet. Upload a CSV to get started.
+        </p>
+      </div>
     </div>
 
     <div v-if="isOpen" class="fixed inset-0 z-50 flex items-start justify-center px-4 py-16">
@@ -42,8 +65,8 @@
             class="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
           />
 
-          <div v-if="error" class="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
-            {{ error }}
+          <div v-if="uploadError" class="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+            {{ uploadError }}
           </div>
 
           <div v-if="result" class="rounded-md border border-border bg-muted/30 px-3 py-2 text-sm">
@@ -70,26 +93,28 @@
 import ThemeToggle from './components/toggle.vue';
 import { Button } from '@/components/ui/button';
 import { api } from '@ukrainian_app/convex/convex/_generated/api';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 const convex = useConvexClient();
+const { data, error: listError, isPending } = useConvexQuery(api.flashcards.listFlashcards, {});
+const flashcards = computed(() => data.value ?? []);
 const isOpen = ref(false);
 const selectedFile = ref<File | null>(null);
 const defaultCategory = ref('');
 const isUploading = ref(false);
-const error = ref('');
+const uploadError = ref('');
 const result = ref<{ inserted: number; skipped: number; errors: string[] } | null>(null);
 
 function openModal() {
   isOpen.value = true;
-  error.value = '';
+  uploadError.value = '';
   result.value = null;
 }
 
 function closeModal() {
   isOpen.value = false;
   selectedFile.value = null;
-  error.value = '';
+  uploadError.value = '';
 }
 
 function onFileChange(event: Event) {
@@ -98,11 +123,11 @@ function onFileChange(event: Event) {
 }
 
 async function uploadCsv() {
-  error.value = '';
+  uploadError.value = '';
   result.value = null;
 
   if (!selectedFile.value) {
-    error.value = 'Please choose a CSV file.';
+    uploadError.value = 'Please choose a CSV file.';
     return;
   }
 
@@ -115,7 +140,7 @@ async function uploadCsv() {
     });
     result.value = response;
   } catch (err) {
-    error.value = err instanceof Error ? err.message : 'Upload failed.';
+    uploadError.value = err instanceof Error ? err.message : 'Upload failed.';
   } finally {
     isUploading.value = false;
   }
